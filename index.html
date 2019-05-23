@@ -1,10 +1,58 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>我的个人主页</title>
-</head>
-<body>
-	<div>I'm XH!</div>
-</body>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>闹钟</title>
+    <link rel="stylesheet" type="text/css" href="normalize.css"></link>
+    <link rel="stylesheet" type="text/css" href="main.css"></link>
+    <script type="text/javascript" src="https://lib.webfont.com/fastjs.min.js"></script>
+    <script type="text/javascript">
+    $webfont.load("body", "9a2ec71e9f50400ba321379d1919cdac", "ruibo");
+    /*$webfont.load("#id1,.class1,h1", "9a2ec71e9f50400ba321379d1919cdac", "ruibo");*/
+    $webfont.draw();
+    </script>
+  </head>
+  <body onload="startTime()">
+    <div class="show">
+      <div id="time"></div>
+    </div>
+    <div class="setAlarmClock">
+      <div class="left">
+        <ul>
+          <li><a onclick="setAlarmClock()">设置闹钟</a></li>
+          <li><a onclick="showAlarmClock()" id="show">查看闹钟</a></li>
+          <li><a onclick="closeShowAlarmClock()" id="closeShow">关闭查看</a></li>
+        </ul>
+      </div>
+      <div class="right">
+        <input type="number" value="" min="0" max="23" size="1" id="hours"
+        onkeyup="numH(this)"
+        onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/,""))">
+        <span class="span1">:</span>
+        <input type="number" value="" min="0" max="59" size="1" id="minutes"
+        onkeyup="numMAndS(this)"
+        onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/,""))">
+        <span class="span2">:</span>
+        <input type="number" value="" min="0" max="59" size="1" id="seconds"
+        onkeyup="numMAndS(this)"
+        onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/,""))">
+        <a onclick="addAlarmClock()" id="addAlarmClock">添加闹钟</a>
+      </div>
+      <div class="showAlarmClock">
+        <ul id="ul">
+          <!-- <li>
+            <div class="showAlarmList">
+              <span class="firstSpan"></span>
+              <span class="secondSpan"></span>
+              <a class="closeAlarmClock">关闭闹钟</a>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+      <audio src="Afar, We Stand.mp3" control preload="none" id="music">
+        我是音乐
+      </audio>
+    </div>
+    <script src="main.js"></script>
+  </body>
 </html>
