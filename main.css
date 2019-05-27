@@ -1,0 +1,211 @@
+/* 展示时间的样式 */
+#time {
+  width: 600px;
+  display: inline-block;
+  color: #ddd;
+  font-size: 80px;
+  border: 1px solid gray;
+  border-radius: 30px;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  padding: 50px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.show {
+  text-align: center;
+  margin: 0 auto;
+}
+
+body {
+  background-color: #666;
+}
+
+.setAlarmClock {
+  overflow: hidden;
+  position: relative;
+  height: 1000px;
+}
+
+.setAlarmClock .left {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.setAlarmClock .left #show {
+  display: block;
+}
+.setAlarmClock .left #closeShow {
+  display: none;
+}
+
+.setAlarmClock .left ul {
+  margin: 40px;
+}
+
+.setAlarmClock li {
+  list-style: none;
+}
+
+.setAlarmClock li a {
+  text-align: center;
+  width: 130px;
+  display: block;
+  padding: 20px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  font-size: 30px;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: black;
+}
+
+.setAlarmClock li a:hover {
+  background-color: #555;
+  cursor: pointer;
+}
+
+/* 下面都是“设置闹钟”的样式 */
+.setAlarmClock .right {
+  display: none;
+  width: 500px;
+  height: 200px;
+  background-color: #555;
+  position: absolute;
+  top: 0;
+  left: 233px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 20px 40px;
+  font-size: 61.8px;
+}
+
+.setAlarmClock .right:before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: #555;
+  border: 1px solid gray;
+  border-top: none;
+  border-right: none;
+  transform: rotate(45deg);
+  position: absolute;
+  top: 40px;
+  left: -11px;
+}
+
+.setAlarmClock .right .span1 {
+  position: absolute;
+  top: 10px;
+  left: 190px;
+}
+
+.setAlarmClock .right .span2 {
+  position: absolute;
+  top: 10px;
+  left: 355px;
+}
+
+.setAlarmClock .right input[type="number"] {
+  width: 100px;
+  height: 61.8px;
+  font-size: 61.8px;
+  text-align: center;
+  padding-left: 2px;
+  line-height: 61.8px;
+  border: 1px solid gray;
+  border-radius: 20px;
+  margin-left: 37.5px;
+  /* 隐藏轮廓 */
+  outline: none;
+  color: #666;
+}
+
+/* 消除 input 的 type = number 时，出现的上下按钮 */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+input[type="number"]{
+    -moz-appearance: textfield;
+}
+
+.setAlarmClock .right #addAlarmClock {
+  display: block;
+  /* width: 150px;
+  height: 61.8px; */
+  padding: 11px;
+  background-color: #555;
+  position: absolute;
+  top: 150px;
+  left: 220px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  font-size: 27px;
+  outline: none;
+  cursor: pointer;
+}
+
+.setAlarmClock .right #addAlarmClock:hover {
+  background-color: #999;
+}
+/* 上面都是“设置闹钟”的样式 */
+
+
+
+/* 展示已经添加的闹钟 */
+.setAlarmClock .showAlarmClock {
+  width: 300px;
+  /* background-color: yellow; */
+  /* border-left: 1px solid gray; */
+  font-size: 30px;
+  color: #ddd;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  /* display: none; ------------------------------------------------------------*/
+}
+.showAlarmClock ul {
+  margin-left: 0;
+  display: none;
+}
+.setAlarmClock .showAlarmClock li {
+  list-style: none;
+}
+
+.setAlarmClock .showAlarmClock li .showAlarmList {
+  border-bottom: 1px solid gray;
+  /* border-top: 1px solid white; */
+  overflow: hidden;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.setAlarmClock .showAlarmClock li .showAlarmList .firstSpan {
+  float: left;
+  width: 100px;
+  padding: 10px;
+  font-size: 40px;
+}
+.setAlarmClock .showAlarmClock li .showAlarmList .secondSpan {
+  float: left;
+  width: 150px;
+  font-size: 20px;
+  clear: both;
+  padding: 10px;
+}
+.setAlarmClock .showAlarmClock li .showAlarmList .closeAlarmClock {
+  float: right;
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  margin: -20px 10px 10px 1px;
+  padding: 0;
+  font-size: 20px;
+  /* clear: both; */
+}
