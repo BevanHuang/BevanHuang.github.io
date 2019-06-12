@@ -1,0 +1,166 @@
+/* li {
+  display: inline;
+  line-height: 24px;
+  height: auto;
+  word-break: break-all;
+  word-wrap: break-word;
+} */
+
+/* 内容过多时，省略 */
+label {
+  /* height: 50px; */
+
+}
+
+h1 {
+  width: 100%;
+  font-size: 100px;
+  font-weight: 100;
+  text-align: center;
+  color: rgba(175, 47, 47, 0.15);
+}
+
+.main {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.input input {
+  width: 600px;
+  padding: 10px;
+  border: 1px solid #dce3e5;
+  border-radius: 7px;
+  outline: none;
+  font-style: italic;
+}
+
+.todos {
+  margin: 30px 0;
+  /* text-align: center; */
+  position: relative;
+}
+.todos h2 {
+  text-align: left;
+  display: inline-block;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+/* .btn-click {
+  transform: rotate(180deg);
+  transition: all 0.2s;
+} */
+
+li {
+  list-style: none;
+}
+
+.view {
+  position: relative;
+}
+
+.todo {
+  text-align: left;
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  margin: 10px;
+  /* border-bottom: 1px solid #c9c9c9; */
+}
+.toggle {
+  position: absolute;
+  left: 10px;
+  top: 7px;
+  width: 30px;
+  height: 30px;
+}
+.todo-name {
+  width: 450px;
+  position: absolute;
+  margin-left: 60px;
+  height: 50px;
+  overflow: hidden;
+  /* 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。 */
+  white-space: nowrap;
+  /* 显示省略符号来代表被修剪的文本。 */
+  text-overflow: ellipsis;
+}
+.destroy{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 10px;
+  font-size: 20px;
+  color: gray;
+  background-color: white;
+  border: none;
+  outline: none;
+}
+.destroy:hover {
+  color: black;
+}
+
+/* 给完成的todo加上删除线，并变颜色 */
+.line {
+  text-decoration: line-through;
+  color: #d9d9d9;
+}
+
+/* 双击编辑 todo 时，让 input 一直处于最上层，所以加了 z-index */
+.todo-edit {
+  width: 550px;
+  height: 48px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 1px 1px 5px #9E9E9E inset;
+}
+
+
+.footer {
+  margin-top: 60px;
+}
+
+.footer p {
+  display: inline-block;
+  float: left;
+}
+
+.footer li {
+  float: right;
+  padding: 5px;
+  display: inline-block;
+  width: 80px;
+  cursor: pointer;
+  border-radius: 7px;
+  margin-right: 15px;
+}
+
+.footer li a {
+  display: inline-block;
+  text-decoration: none;
+  color: #444;
+  text-align: center;
+  width: 80px;
+  height: 20px;
+  line-height: 20px;
+  /* padding: 5px; */
+  font-size: 20px;
+}
+
+#all {
+  padding-right: 15px;
+}
+
+.footer li:hover {
+  border: 1px solid #ecbcac;
+}
+
+.box {
+  border: 1px solid #ecbcac;
+}
