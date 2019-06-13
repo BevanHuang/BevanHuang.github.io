@@ -236,10 +236,6 @@ function addNode(id) {
   newNode.removeClass('li-template');
   newNode.attr('data-id', String(id));
   $('#ul').append(newNode);
-  alert('addNode');
-}
-function testClick(){
-  alert("testSuccess");
 }
 
 // 限制输入
