@@ -1,0 +1,40 @@
+#time {
+  width: 600px;
+  display: inline-block;
+  color: #ddd;
+  font-size: 80px;
+  border: 1px solid gray;
+  border-radius: 30px;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  padding: 50px;
+}
+
+.show {
+  text-align: center;
+  margin: 0 auto;
+}
+
+body {
+  background-color: #666;
+}
+
+#showMultiple {
+  margin-bottom: 40px;
+  font-size: 30px;
+  color: gray;
+}
+#showMultiple:before {
+  content: 'X';
+}
+
+.controlBar button {
+  color: #111;
+  width: 50px;
+  padding: 5px;
+  margin-left: 30px;
+  cursor: pointer;
+  background-color: #555;
+  border: 1px solid #555;
+  border-radius: 5px;
+}
