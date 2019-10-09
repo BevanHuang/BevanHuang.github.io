@@ -107,7 +107,11 @@ input[type="button"] {
 
 #reward {
 	text-decoration: none;
-	color: #ec7259;
-	border: 1px solid #ec7259;
-	border-radius: 50%;
+	color: gray;
+	border: 1px solid gray;
+	border-radius: 8px;
+	padding: 5px;
+	position: fixed;
+	right: 20px;
+	top: 20px;
 }
