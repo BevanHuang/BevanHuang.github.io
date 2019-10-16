@@ -189,8 +189,12 @@ input[type="button"] {
 		background-color: gray;
 	}
 	.tagButton:hover {
+		color: gray;
+		background-color: white;
+	}
+	.tagButton:active {
 		cursor: pointer;
-		background-color: #666;
+		background-color: #123456;
 	}
 	.active {
 		color: gray;
