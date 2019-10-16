@@ -129,6 +129,20 @@ input[type="button"] {
 
 /*移动端的样式(设备小于600px时的样式)*/
 @media screen and (max-width: 600px) {
+	/*去掉横向滚动条*/
+	html {
+	  overflow-y: scroll;
+	}
+
+	:root {
+	  overflow-y: auto;
+	  overflow-x: hidden;
+	}
+
+	:root body {
+	  position: absolute;
+	}
+	/*去掉横向滚动条*/
 	body {
 		background-color: rgba(0, 0, 0, 0.1);
 		background-image: none;
