@@ -9,8 +9,10 @@
 </head>
 <body>
 	<div id="app">
-		<input type="button" value="清空选中标签" class="clear" @click="clear">
-		<input type="button" v-model="banzi" class="banzi" @click="toggle">
+		<div class="top">
+			<input type="button" value="清空选中标签" class="clear" @click="clear">
+			<input type="button" v-model="banzi" class="banzi" @click="toggle">
+		</div>
 		<div id="tag" v-show="toggleBanzi">
 			<div class="tagChild">
 				<p class="tagClass">资质</p>
