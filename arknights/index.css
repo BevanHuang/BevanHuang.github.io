@@ -193,8 +193,8 @@ input[type="button"] {
 		background-color: white;
 	}
 	.tagButton:active {
-		cursor: pointer;
-		background-color: #123456;
+		color: gray;
+		background-color: white;
 	}
 	.active {
 		color: gray;
