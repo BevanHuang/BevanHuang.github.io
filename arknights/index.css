@@ -131,6 +131,7 @@ input[type="button"] {
 	}
 	#tag {
 		width: 100vw;
+		position: static;
 		right: 0px;
 		bottom: 0px;
 	}
