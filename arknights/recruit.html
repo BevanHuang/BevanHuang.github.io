@@ -227,17 +227,10 @@
 			methods: {
 				panduan() {
 					var tempArr = this.specialTag;
-					// console.log(tempArr);
 					for (var i = 0; i < this.tagNow.length; i++) {
 						// 遍历tagNow
-						// 测试用，下2行
-						// console.log('tempArr[' + i + ']');
-						// console.log(tempArr[i]);
-						// console.log('this.tagNow[' + i + ']', this.tagNow[i]);
-						// if(this.tagNow[i] indexOf 
 						var firstStr = this.firstTag.arr.indexOf(this.tagNow[i]);
 						if(firstStr != -1) {
-							console.log(firstStr);
 							var str = '哇！金色传说！！！【' + this.tagNow[i] + '】 = ' + this.firstTag.personName[firstStr];
 
 							if(this.result.indexOf(str) == -1){
@@ -246,17 +239,10 @@
 						}
 						for(var j = 0; j < tempArr.length; j++) {
 							// 遍历specialTag
-							// 测试
-							// console.log('tempArr[' + j + '].name', tempArr[j].name);
 							if(this.tagNow[i] == tempArr[j].name) {
 								// console.log('找到特殊标签了');
 								for(var k = 0; k < this.tagNow.length; k++) {
 									var resultIndex = tempArr[j].arr.indexOf(this.tagNow[k]);
-									// 测试
-									// console.log('this.tagNow[k]', this.tagNow[k]);
-									// console.log('tempArr[j].arr', tempArr[j].arr);
-									// console.log(resultIndex);
-									// console.log('end---------');
 									if(resultIndex != -1) {
 										var str = '哇！金色传说！！！【' + this.tagNow[k] + ' + ' + tempArr[j].name + '】 = ' + tempArr[j].personName[resultIndex];
 										if(this.result.indexOf(str) == -1){
@@ -267,7 +253,6 @@
 							}
 						}
 					}
-					// console.log(this.tagNow[this.tagNow.length - 1]);
 				},
 				changeActive(item) {
 					if(this.tagNow.length == 5 && this.tagNow.indexOf(item.name) == -1) {
@@ -298,13 +283,6 @@
 							this.isNoShowCautious = true;
 						}
 					}
-					// 测试。之后删掉以下2行
-					// console.log(this.tagNow.length);
-					// console.log(this.tagNow.indexOf(item.name));
-					
-					// 测试。之后删掉以下两行
-					// console.log(item);
-					// console.log(this.tagNow);
 				},
 				toggle() {
 					this.toggleBanzi = !this.toggleBanzi;
