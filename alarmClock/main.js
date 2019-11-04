@@ -205,6 +205,10 @@ function showAlarmClock() {
   show.style.display = "none";
   CloseShowButton.style.display = "block";
 }
+// 关闭设置闹钟面板
+$(".right button").on('click', function() {
+  rightBar[0].style.display = "none";
+});
 
 function closeShowAlarmClock() {
   ul.style.display = "none";
