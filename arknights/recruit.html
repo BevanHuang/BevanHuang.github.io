@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>明日方舟公开招募计算器</title>
+	<meta name="keywords" content="明日方舟公开招募,明日方舟公开招募计算器,公开招募,公开招募计算器">
+	<meta name="description" content="这是一款简单易用的明日方舟公开招募计算器,选中5个标签即可,让你不会再错过一些稀有的组合tag。希望对各位博士有帮助。">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+	<script type="text/javascript" src="./lib/vue.js"></script>
+	<link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+<body>
+	<div id="app">
+		<div class="top">
+			<input type="button" value="清空选中标签" class="clear" @click="clear">
+			<input type="button" v-model="banzi" class="banzi" @click="toggle">
+		</div>
+		<div id="tag" v-show="toggleBanzi">
+			<div class="tagChild">
+				<p class="tagClass">资质</p>
+				<input type="button" :value="item.name" v-for="item in zizhi" :key="item.id" @click="changeActive(item)" :class="{active: item.isActive, tagButton: isTagButton }">
+			</div>
+			<div class="tagChild">
+				<p class="tagClass">位置</p>
+				<input type="button" :value="item.name" v-for="item in position" :key="item.id" @click="changeActive(item)" :class="{active: item.isActive, tagButton: isTagButton }">
+			</div>
+			<!-- <div class="tagChild">
+				<p class="tagClass">性别</p>
+				<input type="button" :value="item.name" v-for="item in gender" :key="item.id" @click="changeActive(item)" :class="{active: item.isActive, tagButton: isTagButton }">
+			</div> -->
+			<div class="tagChild">
+				<p class="tagClass">职业</p>
+				<input type="button" :value="item.name" v-for="item in profession" :key="item.id" @click="changeActive(item)" :class="{active: item.isActive, tagButton: isTagButton }">
+			</div>
+			<div class="tagChild">
+				<p class="tagClass">标签</p>
+				<input type="button" :value="item.name" v-for="item in tag" :key="item.id" @click="changeActive(item)" :class="{active: item.isActive, tagButton: isTagButton }">
+			</div>
+		</div>
+		<div id="showResult">
+			<div class="showResultTitle">已选标签<span>最多选择5个标签</span></div>
+			<div class="showResult"><i v-show="chooseTag">请选择标签</i><span v-for="item in tagNow">{{ item }}</span></div>
+			<span v-if="isNoShowCautious">当前所选标签出现【四星】以上的概率较小,除非你是欧皇。</span>
+			<span class="cautious" v-else>如果把招募时间拉满,当前所选标签获得【四星】以上干员几率极大！</span>
+			<ul>
+				<li v-for="item in result" class="show" v-html="item"></li>
+			</ul>
+		</div>
+		<a href="./reward.html" id="reward">打赏作者</a>
+		<a href="./source.html" id="source">素材掉落</a>
+	</div>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				toggleBanzi: true,
+				banzi: '隐藏',
+				// chooseTag是没有选择标签时，提示用户的提示语v-show切换
+				chooseTag: true,
+				isTagButton: true,
+				// tagNow数组存放选中的标签
+				tagNow: [],
+				// isNoShowCautious为false时(v-show)，展示出现【四星】以上组合的提示
+				// isNoShowCautious为true时(v-show)，展示出现【四星】以上的概率小
+				isNoShowCautious: true,
+				// result数组存放出现【四星】以上组合的字符串
+				result: [],
+				firstTag: {
+					arr: ['特种', '爆发', '召唤', '快速复活', '支援', '削弱', '控场', '位移', '高级资深干员', '资深干员'],
+					personName: ['砾（4星）、暗索（4星）、阿消（4星）、红（5星）、狮蝎（5星）、崖心（5星）、食铁兽（5星）', '守林人（5星）', '梅尔（5星）', '砾（4星）、红（5星）', '杜宾（4星）、白面鸮（5星）、华法琳（5星）、凛冬（5星）', '夜烟（4星）、流星（4星）、初雪（5星）、陨星（5星）', '德克萨斯（5星）、红（5星）、梅尔（5星）', '暗索（4星）、阿消（4星）、崖心（5星）、食铁兽（5星）、可颂（5星）', '银灰（6星）、能天使（6星）、伊芙利特（6星）、推进之王（6星）、塞雷娅（6星）、星熊（6星）、闪灵（6星）、夜莺（6星）、斯卡蒂（6星）', '守林人（5星）、陨星（5星）、蓝毒（5星）、普罗旺斯（5星）、白金（5星）、凛冬（5星）、德克萨斯（5星）、因陀罗（5星）、幽灵鲨（5星）、雷蛇（5星）、临光（5星）、火神（5星）、可颂（5星）、华法琳（5星）、赫默（5星）、白面鸮（5星）、初雪（5星）、梅尔（5星）、真理（5星）、红（5星）、食铁兽（5星）、崖心（5星）、狮蝎（5星）、夜魔（5星）']
+				},
+				zizhi: [
+					{ name: '新手', id: 1, isActive: false },
+					{ name: '资深干员', id: 2, isActive: false },
+					{ name: '高级资深干员', id: 3, isActive: false }
+				],
+				position: [
+					{ name: '远程位', id: 1, isActive: false },
+					{ name: '近战位', id: 2, isActive: false }
+				],
+				profession: [
+					{ name: '先锋', id: 1, isActive: false },
+					{ name: '狙击', id: 2, isActive: false },
+					{ name: '医疗', id: 3, isActive: false },
+					{ name: '术师', id: 4, isActive: false },
+					{ name: '近卫', id: 5, isActive: false },
+					{ name: '重装', id: 6, isActive: false },
+					{ name: '辅助', id: 7, isActive: false },
+					{ name: '特种', id: 8, isActive: false }
+				],
+				tag: [
+					{ name: '治疗', id: 1, isActive: false },
+					{ name: '支援', id: 2, isActive: false },
+					{ name: '输出', id: 3, isActive: false },
+					{ name: '群攻', id: 4, isActive: false },
+					{ name: '减速', id: 5, isActive: false },
+					{ name: '生存', id: 6, isActive: false },
+					{ name: '防护', id: 7, isActive: false },
+					{ name: '削弱', id: 8, isActive: false },
+					{ name: '位移', id: 9, isActive: false },
+					{ name: '爆发', id: 10, isActive: false },
+					{ name: '控场', id: 11, isActive: false },
+					{ name: '召唤', id: 12, isActive: false },
+					{ name: '快速复活', id: 13, isActive: false },
+					{ name: '费用回复', id: 14, isActive: false },
+					{ name: '支援机械', id: 15, isActive: false }
+				],
+				specialTag: [ 
+					{ 
+						name: '近战位', 
+						arr: ['治疗', '支援', '群攻', '减速', '控场'],
+						personName: ['古米（4星）、 临光（5星）', '杜宾（4星）、 凛冬（5星）', '艾丝黛尔（4星）、 幽灵鲨（5星）', '霜叶（4星）、 食铁兽（5星）', '德克萨斯（5星）、 红（5星）']
+					},
+					{ 
+						name: '输出', 
+						arr: ['防护', '重装', '辅助', '特种', '支援', '削弱', '减速', '位移'],
+						personName: ['雷蛇（5星）、火神（5星）', '雷蛇（5星）、火神（5星）', '真理（5星）', '狮蝎（5星）、崖心（5星）', '杜宾（4星）', '夜烟（4星）、流星（4星）', '霜叶（4星）、真理（5星）', '崖心（5星）']
+					},
+					{ 
+						name: '防护', 
+						arr: ['特种', '治疗', '位移', '输出', '生存'],
+						personName: ['砾（4星）', '古米（4星）、临光（5星）', '可颂（5星）', '雷蛇（5星）、火神（5星）', '火神（5星）']
+					},
+					{ 
+						name: '生存', 
+						arr: ['远程位', '狙击', '群攻', '特种'],
+						personName: ['杰西卡（4星）', '杰西卡（4星）', '艾丝黛尔（4星）、幽灵鲨（5星）', '狮蝎（5星）']
+					},
+					{ 
+						name: '治疗', 
+						arr: ['重装', '近战位', '防护', '支援'],
+						personName: ['古米（4星）、临光（5星）', '古米（4星）、临光（5星）', '古米（4星）、临光（5星）', '白面鸮（5星）、华法琳（5星）']
+					},
+					{ 
+						name: '支援', 
+						arr: ['先锋', '费用回复', '近卫', '医疗', '治疗', '近战位', '远程位', '输出'],
+						personName: ['凛冬（5星）', '凛冬（5星）', '杜宾（4星）', '白面鸮（5星）、华法琳（5星）', '白面鸮（5星）、华法琳（5星）', '杜宾（4星）、凛冬（5星）', '白面鸮（5星）、华法琳（5星）', '', '杜宾（4星）']
+					},
+					{ 
+						name: '快速复活', 
+						arr: ['控场', '防护'],
+						personName: ['红（5星）', '砾（4星）']
+					},
+					{ 
+						name: '群攻', 
+						arr: ['狙击', '近战位', '近卫', '生存', '削弱', '减速'],
+						personName: ['白雪（4星）、陨星（5星）', '艾丝黛尔（4星）、幽灵鲨（5星）', '艾丝黛尔（4星）、幽灵鲨（5星）', '艾丝黛尔（4星）、幽灵鲨（5星）', '陨星（5星）', '白雪（4星）']
+					},
+					{ 
+						name: '削弱', 
+						arr: ['狙击', '术师', '辅助', '输出', '群攻'],
+						personName: ['流星（4星）、陨星（5星）', '夜烟（4星）', '初雪（5星）', '夜烟（4星）、流星（4星）', '陨星（5星）']
+					},
+					{ 
+						name: '减速', 
+						arr: ['狙击', '近卫', '近战位', '特种', '输出', '群攻', '位移'],
+						personName: ['白雪（4星）', '霜叶（4星）', '霜叶（4星）、食铁兽（5星）', '食铁兽（5星）', '霜叶（4星）、真理（5星）、夜魔（5星）', '白雪（4星）', '食铁兽（5星）']
+					},
+					{ 
+						name: '控场', 
+						arr: ['先锋', '费用回复', '特种', '辅助', '近战位', '远程位', '快速复活'],
+						personName: ['德克萨斯（5星）', '德克萨斯（5星）', '红（5星）', '梅尔（5星）', '德克萨斯（5星）、红（5星）', '梅尔（5星）', '红（5星）']
+					},
+					{ 
+						name: '位移', 
+						arr: ['重装', '特种', '输出', '防护', '减速'],
+						personName: ['可颂（5星）', '暗索（4星）、阿消（4星）、崖心（5星）、食铁兽（5星）', '崖心（5星）', '可颂（5星）', '食铁兽（5星）']
+					},
+					{ 
+						name: '狙击', 
+						arr: ['群攻', '削弱', '减速', '爆发', '生存'],
+						personName: ['白雪（4星）、陨星（5星）', '流星（4星）、陨星（5星）', '白雪（4星）', '守林人（5星）', '杰西卡（4星）']
+					},
+					{ 
+						name: '术师', 
+						arr: ['削弱', '减速', '治疗'],
+						personName: ['夜烟（4星）', '夜魔（5星）', '夜魔（5星）']
+					},
+					{ 
+						name: '先锋', 
+						arr: ['支援', '控场'],
+						personName: ['凛冬（5星）', '德克萨斯（5星）']
+					},
+					{ 
+						name: '费用回复', 
+						arr: ['支援', '控场'],
+						personName: ['凛冬（5星）', '德克萨斯（5星）']
+					},
+					{ 
+						name: '近卫', 
+						arr: ['减速', '支援', '群攻'],
+						personName: ['霜叶（4星）', '杜宾（4星）', '艾丝黛尔（4星）、幽灵鲨（5星）']
+					},
+					{ 
+						name: '重装', 
+						arr: ['治疗', '位移', '输出', '生存'],
+						personName: ['古米（4星）、临光（5星）', '可颂（5星）', '雷蛇（5星）、火神（5星）', '火神（5星）']
+					},
+					{ 
+						name: '医疗', 
+						arr: ['支援'],
+						personName: ['白面鸮（5星）、华法琳（5星）']
+					},
+					{ 
+						name: '辅助', 
+						arr: ['削弱', '输出', '控场'],
+						personName: ['初雪（5星）', '真理（5星）', '梅尔（5星）']
+					},
+					{
+						name: '特种', 
+						arr: ['输出', '防护', '生存', '减速', '控场', '位移'],
+						personName: ['狮蝎（5星）、崖心（5星）', '砾（4星）', '狮蝎（5星）', '食铁兽（5星）', '红（5星）', '暗索（4星）、阿消（4星）、崖心（5星）、食铁兽（5星）']
+					},
+					{
+						name: '高级资深干员', 
+						arr: ['远程位', '近战位', '先锋', '狙击', '医疗', '术师', '近卫', '重装', '治疗', '支援', '输出', '群攻', '防护', '削弱', '费用回复', '生存'],
+						personName: ['能天使（6星）、伊芙利特（6星）、闪灵（6星）、夜莺（6星）', '银灰（6星）、塞雷娅（6星）、星熊（6星）、推进之王（6星）、斯卡蒂（6星）', '推进之王（6星）', '能天使（6星）', '闪灵（6星）、夜莺（6星）', '伊芙利特（6星）', '银灰（6星）、斯卡蒂（6星）', '塞雷娅（6星）、星熊（6星）', '闪灵（6星）、夜莺（6星）、塞雷娅（6星）', '闪灵（6星）、夜莺（6星）、塞雷娅（6星）、银灰（6星）', '能天使（6星）、推进之王（6星）、银灰（6星）、星熊（6星）、斯卡蒂（6星）', '伊芙利特（6星）', '塞雷娅（6星）、星熊（6星）', '伊芙利特（6星）', '推进之王（6星）', '斯卡蒂（6星）']
+					},
+					{
+						name: '资深干员', 
+						arr: ['远程位', '近战位', '先锋', '狙击', '医疗', '近卫', '重装', '辅助', '特种', '治疗', '支援', '输出', '群攻', '减速', '生存', '防护', '削弱', '位移', '爆发', '控场', '召唤', '快速复活', '费用回复'],
+						personName: ['守林人（5星）、陨星（5星）、蓝毒（5星）、普罗旺斯（5星）、白金（5星）、华法琳（5星）、赫默（5星）、白面鸮（5星）、初雪（5星）、梅尔（5星）、真理（5星）、夜魔（5星）', '凛冬（5星）、德克萨斯（5星）、因陀罗（5星）、幽灵鲨（5星）、雷蛇（5星）、临光（5星）、火神（5星）、可颂（5星）、红（5星）、食铁兽（5星）、崖心（5星）、狮蝎（5星）', '凛冬（5星）、德克萨斯（5星）', '守林人（5星）、陨星（5星）、蓝毒（5星）、普罗旺斯（5星）、白金（5星）', '华法琳（5星）、赫默（5星）、白面鸮（5星）', '因陀罗（5星）、幽灵鲨（5星）', '雷蛇（5星）、临光（5星）、火神（5星）、可颂（5星）', '初雪（5星）、梅尔（5星）、真理（5星）', '红（5星）、食铁兽（5星）、崖心（5星）、狮蝎（5星）', '临光（5星）、华法琳（5星）、赫默（5星）、白面鸮（5星）、夜魔（5星）', '凛冬（5星）、华法琳（5星）、白面鸮（5星）', '守林人（5星）、蓝毒（5星）、普罗旺斯（5星）、白金（5星）、因陀罗（5星）、雷蛇（5星）、火神（5星）、真理（5星）、崖心（5星）、狮蝎（5星）、夜魔（5星）', '陨星（5星）、幽灵鲨（5星）', '真理（5星）、食铁兽（5星）、夜魔（5星）', '因陀罗（5星）、幽灵鲨（5星）、火神（5星）、狮蝎（5星）', '雷蛇（5星）、临光（5星）、火神（5星）、可颂（5星）', '陨星（5星）、初雪（5星）', '可颂（5星）、食铁兽（5星）、崖心（5星）', '守林人（5星）', '德克萨斯（5星）、梅尔（5星）、红（5星）', '梅尔（5星）', '红（5星）', '凛冬（5星）、德克萨斯（5星）']
+					}
+					]
+			},
+			methods: {
+				panduan() {
+					var tempArr = this.specialTag;
+					for (var i = 0; i < this.tagNow.length; i++) {
+						// 遍历tagNow
+						var firstStr = this.firstTag.arr.indexOf(this.tagNow[i]);
+						if(firstStr != -1) {
+							var str = '哇！金色传说！！！【' + this.tagNow[i] + '】 = ' + this.firstTag.personName[firstStr];
+
+							if(this.result.indexOf(str) == -1){
+								this.result.push(str);
+							}
+						}
+						for(var j = 0; j < tempArr.length; j++) {
+							// 遍历specialTag
+							if(this.tagNow[i] == tempArr[j].name) {
+								// console.log('找到特殊标签了');
+								for(var k = 0; k < this.tagNow.length; k++) {
+									var resultIndex = tempArr[j].arr.indexOf(this.tagNow[k]);
+									if(resultIndex != -1) {
+										var str = '哇！金色传说！！！【' + this.tagNow[k] + ' + ' + tempArr[j].name + '】 = ' + tempArr[j].personName[resultIndex];
+										if(str=='哇！金色传说！！！【狙击 + 群攻】 = 白雪（4星）、陨星（5星）') {
+											str = '<s>哇！金色传说！！！【狙击 + 群攻】 = 白雪（4星）、陨星（5星）</s>恭喜你获得[空爆]一枚'
+										}
+										if(str=='哇！金色传说！！！【群攻 + 狙击】 = 白雪（4星）、陨星（5星）') {
+											str = '<s>哇！金色传说！！！【群攻 + 狙击】 = 白雪（4星）、陨星（5星）</s>恭喜你获得[空爆]一枚'
+										}
+										if(this.result.indexOf(str) == -1){
+											this.result.push(str);
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				changeActive(item) {
+					if(this.tagNow.length == 5 && this.tagNow.indexOf(item.name) == -1) {
+						alert("只能选择 5 个标签。");
+						console.log(this.tagNow);
+					} else {
+						if(this.tagNow.indexOf(item.name) == -1) {
+							item.isActive=!item.isActive;
+							this.tagNow.push(item.name);
+							this.panduan();
+						} else {
+							var index = this.tagNow.indexOf(item.name);
+							this.tagNow.splice(index, 1);
+							item.isActive=!item.isActive;
+							this.result = [];
+							this.panduan();
+						}
+						// 当有标签被选择时隐藏‘请选择标签’的提示语
+						if(this.tagNow.length != 0) {
+							this.chooseTag = false;
+						} else {
+							this.chooseTag = true;
+						}
+						// 当result数组为空，则没有四星干员
+						if(this.result.length != 0) { // 非空情况,显示cautious
+							this.isNoShowCautious = false;
+						} else {  // 数组为空，不显示cautious
+							this.isNoShowCautious = true;
+						}
+					}
+				},
+				toggle() {
+					this.toggleBanzi = !this.toggleBanzi;
+					if(this.banzi == '隐藏') {
+						this.banzi = '展示';
+					} else if(this.banzi == '展示') {
+						this.banzi = '隐藏';
+					}
+				},
+				clear() {
+					this.result = [];
+					this.tagNow = [];
+					this.isNoShowCautious = true;
+					this.chooseTag = true;
+					for(var i = 0; i < this.zizhi.length; i++) {
+						this.zizhi[i].isActive = false;
+					}
+					for(var i = 0; i < this.position.length; i++) {
+						this.position[i].isActive = false;
+					}
+					// for(var i = 0; i < this.gender.length; i++) {
+					// 	this.gender[i].isActive = false;
+					// }
+					for(var i = 0; i < this.profession.length; i++) {
+						this.profession[i].isActive = false;
+					}
+					for(var i = 0; i < this.tag.length; i++) {
+						this.tag[i].isActive = false;
+					}
+				}			
+			}
+		});
+	</script>
+</body>
+</html>
