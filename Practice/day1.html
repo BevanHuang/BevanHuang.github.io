@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>day1 练习</title>
+    <script src="./vue.js"></script>
+    <style>
+        #app {
+            text-align: center
+        }
+
+        table td, table th {
+            border: 1px solid #ccc;
+            height: 48px;
+            line-height: 48px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px auto;
+        }
+
+        /* 切换的样式 */
+        .style1 thead {
+            background-color: #0D6FCC;
+        }
+        .style1 tfoot {
+            font-weight: bold;
+            background-color: #0D6FCC;
+        }
+        .style1 tbody tr:nth-of-type(even) {
+            background-color: #339DDD;
+        }
+        .style1 tbody tr:nth-of-type(odd) {
+            background-color: #C0EAF7;
+        }
+
+        /* 按钮的位置 */
+        .dec {
+            float: left;
+            margin: 14px 10px 0 20px;
+        }
+        .inc {
+            float: right;
+            margin: 14px 20px 0 10px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{title}}</h2>
+        <p>共<strong>{{goods.length}}</strong>件商品</p>
+        <button @click="hasStyle = !hasStyle">切换表格样式</button>
+        <table :class="hasStyle ? 'style1' : ''">
+            <thead>
+                <tr>
+                    <th>商品名称</th>
+                    <th>商品库存</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in goods" :key="index">
+                    <td>{{item.name}}</td>
+                    <td>
+                        <button @click="decrese(item)" class="dec">-</button>
+                        {{item.stock}}
+                        <button @click="item.stock++" class="inc">+</button>
+                    </td>
+                    <td><button @click="deleteGood(index)">删除</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input 
+                        type="text" 
+                        v-model="newGood.name" 
+                        style="text-align: center;"
+                        @keydown.enter="addGood">
+                    </td>
+                    <td>
+                        <input 
+                        type="number" 
+                        v-model.number="newGood.stock" 
+                        @input="reZero" class="inputCenter" style="text-align: center;"
+                        @keydown.enter="addGood">
+                    </td>
+                    <td>
+                        <button @click="addGood">添加</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>总计</td>
+                    <td>{{allGoods}}</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                title: '商品和库存管理',
+                goods: [
+                    { name: '小米手机', stock: 10 },
+                    { name: '华为手机', stock: 10 },
+                    { name: 'iphone', stock: 10 }
+                ],
+                newGood: {
+                    name: "",
+                    stock: 0
+                },
+                hasStyle: false
+            },
+            methods: {
+                decrese(item) {
+                    console.log(item);
+                    if(item.stock > 0) {
+                        item.stock--;
+                    }
+                },
+                addGood: function() {
+                    if(this.newGood.name == "") {
+                        alert('商品名称不能为空！');
+                        return;
+                    }
+                    this.goods.push(this.newGood);
+                    this.newGood = {
+                        name: "",
+                        stock: 0
+                    }
+                },
+                deleteGood: function(index) {
+                    this.goods.splice(index, 1);
+                },
+                reZero: function() {
+                    if(this.newGood.stock < 0) {
+                        this.newGood.stock = 0;
+                    }
+                }
+            },
+            computed: {
+                allGoods: function() {
+                    let count = 0;
+                    for(good of this.goods) {
+                        count += good.stock;
+                    }
+                    return count;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
