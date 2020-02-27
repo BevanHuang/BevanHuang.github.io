@@ -2,7 +2,7 @@
 
 import MovieLists from "./MovieLists.js";
 import movieService from '../service/movieService.js';
-import Loading from './modal/Loading.js';
+import Loading from './Loading.js';
 import Pager from './Pager.js';
 
 var template = `
