@@ -3,10 +3,30 @@
 var template = `
 <div class="data">
     <div class="poster">
-        <img :src="movie.poster" alt="">
+        <router-link 
+            :to="{
+                name:'movie-detail',
+                params: {
+                    id: movie._id
+                }
+            }"
+        >
+            <img 
+            :src="movie.poster" 
+            :alt="movie.name">
+        </router-link>
     </div>
     <div class="words">
-        <h2 class="title">{{movie.name}}</h2>
+        <router-link 
+            :to="{
+                name:'movie-detail',
+                params: {
+                    id: movie._id
+                }
+            }"
+        >
+            <h2 class="title">{{movie.name}}</h2>
+        </router-link>
         <div class="attach">
             <span>英文名：{{movie.ename}}</span>
             <span>类型：{{movie.type}}</span>
