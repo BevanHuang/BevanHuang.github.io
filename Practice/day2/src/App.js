@@ -1,12 +1,12 @@
-import MovieContainer from './components/MovieContainer.js';
 var template = `
     <div>
-        <movie-container />
+        <header>
+            <router-link :to="{name:'home'}">首页</router-link>
+            <router-link :to="{name:'movie'}">电影页</router-link>
+        </header>
+        <router-view></router-view>
     </div>
 `;
 export default {
-    components: {
-        MovieContainer
-    },
     template
 }

@@ -1,6 +1,7 @@
 // 入口文件
 // 作用：导入spa的首页
 import App from './App.js';
+import router from './router.js';
 
 new Vue({
     el: '#app',
@@ -14,5 +15,6 @@ new Vue({
     `,
     components: {
         App
-    }
+    },
+    router
 });
